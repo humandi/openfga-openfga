@@ -801,6 +801,9 @@ func TestServerMetricsReporting(t *testing.T) {
 	t.Run("sqlite", func(t *testing.T) {
 		testServerMetricsReporting(t, "sqlite")
 	})
+	t.Run("libsql", func(t *testing.T) {
+		testServerMetricsReporting(t, "libsql")
+	})
 }
 
 func testServerMetricsReporting(t *testing.T, engine string) {
@@ -1549,6 +1552,29 @@ func TestServerContext_datastoreConfig(t *testing.T) {
 			config: &serverconfig.Config{
 				Datastore: serverconfig.DatastoreConfig{
 					Engine: "sqlite",
+					URI:    "uri?is;bad=true",
+				},
+			},
+			wantDSType:     nil,
+			wantSerializer: nil,
+			wantErr:        errors.New("invalid semicolon separator in query"),
+		},
+		{
+			name: "libsql",
+			config: &serverconfig.Config{
+				Datastore: serverconfig.DatastoreConfig{
+					Engine: "libsql",
+				},
+			},
+			wantDSType:     &sqlite.Datastore{},
+			wantSerializer: &sqlcommon.SQLContinuationTokenSerializer{},
+			wantErr:        nil,
+		},
+		{
+			name: "libsql_bad_uri",
+			config: &serverconfig.Config{
+				Datastore: serverconfig.DatastoreConfig{
+					Engine: "libsql",
 					URI:    "uri?is;bad=true",
 				},
 			},

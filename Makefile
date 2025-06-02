@@ -143,6 +143,12 @@ dev-run: $(GO_BIN)/CompileDaemon $(GO_BIN)/openfga ## Run the OpenFGA server wit
 			CompileDaemon -graceful-kill -build='make install' -command="openfga run --datastore-engine sqlite --datastore-uri /tmp/openfga.sqlite"; \
 			break; \
 			;; \
+		"libsql") \
+			echo "==> Running OpenFGA with LibSQL data storage"; \
+			openfga migrate --datastore-engine libsql --datastore-uri 'http://localhost:8080'; \
+			CompileDaemon -graceful-kill -build='make install' -command="openfga run --datastore-engine libsql --datastore-uri 'http://localhost:8080'"; \
+			break; \
+			;; \
 		*) \
 			echo "Invalid option. Try again."; \
 			;; \
