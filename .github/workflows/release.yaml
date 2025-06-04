@@ -34,9 +34,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Manually clone repo to match module path
+        run: |
+          mkdir -p $HOME/go/src/github.com/openfga
+          cp -r . $HOME/go/src/github.com/openfga/openfga
+          cd $HOME/go/src/github.com/openfga/openfga
+
       - name: run make commands
         run: |
+          go clean -modcache
+          go mod tidy
           make deps
+          
 
       # - name: Login to Docker Hub
       #   uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
