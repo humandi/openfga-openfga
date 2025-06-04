@@ -10,9 +10,10 @@ import (
 	"github.com/cenkalti/backoff/v4"
 	"github.com/go-sql-driver/mysql"
 	"github.com/pressly/goose/v3"
-	_ "github.com/tursodatabase/go-libsql"
+	_ "github.com/tursodatabase/libsql-client-go/libsql"
 
 	"github.com/openfga/openfga/assets"
+	"github.com/openfga/openfga/pkg/storage/libsql"
 	"github.com/openfga/openfga/pkg/storage/sqlite"
 )
 
@@ -86,6 +87,7 @@ func RunMigrations(cfg MigrationConfig) error {
 		// Replace CLI uri with the one we just updated.
 		uri = dbURI.String()
 	case "sqlite":
+		fmt.Println("sqlite uri 0", uri)
 		driver = "sqlite"
 		migrationsPath = assets.SqliteMigrationDir
 
@@ -99,7 +101,7 @@ func RunMigrations(cfg MigrationConfig) error {
 		migrationsPath = assets.SqliteMigrationDir
 
 		var err error
-		uri, err = sqlite.PrepareDSN(uri)
+		uri, err = libsql.PrepareDSN(uri)
 		if err != nil {
 			return err
 		}
