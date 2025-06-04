@@ -31,13 +31,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Go
-        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
-        with:
-          go-version-file: './go.mod'
-          cache-dependency-path: './go.sum'
-          check-latest: true
-
       # - name: Login to Docker Hub
       #   uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
       #   with:
@@ -64,6 +57,7 @@ jobs:
           args: release --clean --config .goreleaser.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GORELEASER_GITHUB_TOKEN }}
+          GOPRIVATE: github.com/openfga/*
 
       # - name: Update Docker Hub Description
       #   uses: peter-evans/dockerhub-description@432a30c9e07499fd01da9f8a49f0faf9e0ca5b77 # v4.0.2
