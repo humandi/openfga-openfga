@@ -34,20 +34,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Define working dir
-        id: vars
-        run: echo "repopath=$HOME/go/src/github.com/openfga/openfga" >> $GITHUB_OUTPUT
-
-      - name: Manually clone repo to match module path
+      - name: Debug git info
         run: |
-          mkdir -p ${{ steps.vars.outputs.repopath }}/..
-          cp -r . ${{ steps.vars.outputs.repopath }}
+          git remote -v
+          git log -1
+          tree -L 3
 
       - name: run make commands
         run: |
-          cd ${{ steps.vars.outputs.repopath }}
-          go clean -modcache
-          go mod tidy
           make deps
           
 
@@ -75,7 +69,6 @@ jobs:
           distribution: goreleaser
           version: '~> v2'
           args: release --clean --config .goreleaser.yaml
-          working-directory: ${{ steps.vars.outputs.repopath }}
         env:
           GITHUB_TOKEN: ${{ secrets.GORELEASER_GITHUB_TOKEN }}
           GOPRIVATE: github.com/openfga/*
