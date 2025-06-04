@@ -26,7 +26,7 @@ builds:
 release:
   github:
     owner: humandi
-    name: openfga
+    name: openfga-openfga
 
 archives:
   - files:
