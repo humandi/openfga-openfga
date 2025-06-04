@@ -5,7 +5,7 @@ go 1.24.2
 // this is for local development
 // replace github.com/openfga/openfga => ./
 //this is for CI
-replace github.com/openfga/openfga => ./../openfga
+replace github.com/openfga/openfga => ./../openfga-openfga
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
