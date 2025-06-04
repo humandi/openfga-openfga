@@ -2,7 +2,7 @@ module github.com/openfga/openfga
 
 go 1.24.2
 
-// replace github.com/openfga/openfga => ./
+replace github.com/openfga/openfga => ./
 // replace github.com/openfga/openfga => github.com/openfga/openfga
 
 require (
