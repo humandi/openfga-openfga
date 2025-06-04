@@ -2,7 +2,8 @@ module github.com/openfga/openfga
 
 go 1.24.2
 
-replace github.com/openfga/openfga => ./
+// replace github.com/openfga/openfga => ./
+replace github.com/openfga/openfga => ./../openfga-openfga
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
