@@ -20,9 +20,7 @@ jobs:
       # digest: ${{ steps.image.outputs.digest }}
       subjects-as-file: ${{ steps.hashes.outputs.handle }}
     steps:
-      - name: Set GOPRIVATE
-        run: echo "GOPRIVATE=github.com/openfga/*" >> $GITHUB_ENV
-
+      
       - name: Extract Version from Tag
         id: tag_name
         run: |
